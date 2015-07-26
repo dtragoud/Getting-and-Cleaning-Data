@@ -1,46 +1,31 @@
-Course Project Code Book
+"run_analysis.R" Code Book
 ========================
 
-Source of the original data: https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
+Original data taken from
+https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
 
-Original description: http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
+Original description
+http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
 
-The attached R script (run_analysis.R) performs the following to clean up the data:
+Script run_analysis.R performs the following:
 
-* Merges the training and test sets to create one data set, namely train/X_train.txt with test/X_test.txt, the result of which is a 10299x561 data frame, as in the original description ("Number of Instances: 10299" and "Number of Attributes: 561"), train/subject_train.txt with test/subject_test.txt, the result of which is a 10299x1 data frame with subject IDs, and train/y_train.txt with test/y_test.txt, the result of which is also a 10299x1 data frame with activity IDs.
+1. Merges the training and the test sets to create one data set.
 
-* Reads features.txt and extracts only the measurements on the mean and standard deviation for each measurement. The result is a 10299x66 data frame, because only 66 out of 561 attributes are measurements on the mean and standard deviation. All measurements appear to be floating point numbers in the range (-1, 1).
+Firstly, the script merges train/X_train.txt with test/X_test.txt into a 10299x561 data frame. The original description lists  10299 Number of Instances and 561 Number of Attributes.
+Secondly, the script merges train/subject_train.txt with test/subject_test.txt into a 10299x1 data frame (including subject IDs) and train/y_train.txt with test/y_test.txt into a 10299x1 data frame (including activity IDs).
 
-* Reads activity_labels.txt and applies descriptive activity names to name the activities in the data set:
+2. Extracts only the measurements on the mean and standard deviation for each measurement.
 
-        walking
-        
-        walkingupstairs
-        
-        walkingdownstairs
-        
-        sitting
-        
-        standing
-        
-        laying
+The script reads features.txt and extracts only the measurements on the mean and standard deviation for each measurement into a 10299x66 data frame.
 
-* The script also appropriately labels the data set with descriptive names: all feature names (attributes) and activity names are converted to lower case, underscores and brackets () are removed. Then it merges the 10299x66 data frame containing features with 10299x1 data frames containing activity labels and subject IDs. The result is saved as merged_clean_data.txt, a 10299x68 data frame such that the first column contains subject IDs, the second column activity names, and the last 66 columns are measurements. Subject IDs are integers between 1 and 30 inclusive. The names of the attributes are similar to the following:
+3. Uses descriptive activity names to name the activities in the data set.
 
-        tbodyacc-mean-x 
-        
-        tbodyacc-mean-y 
-        
-        tbodyacc-mean-z 
-        
-        tbodyacc-std-x 
-        
-        tbodyacc-std-y 
-        
-        tbodyacc-std-z 
-        
-        tgravityacc-mean-x 
-        
-        tgravityacc-mean-y
+The script reads activity_labels.txt and applies descriptive activity names to name the activities in the data set: 1. walking 2. walkingupstairs 3. walkingdownstairs 4. sitting 5. standing 6. laying
 
-* Finally, the script creates a 2nd, independent tidy data set with the average of each measurement for each activity and each subject. The result is saved as data_set_with_the_averages.txt, a 180x68 data frame, where as before, the first column contains subject IDs, the second column contains activity names (see below), and then the averages for each of the 66 attributes are in columns 3...68. There are 30 subjects and 6 activities, thus 180 rows in this data set with averages.
+4. Appropriately labels the data set with descriptive variable names. 
+
+All feature names (attributes) and activity names are converted to lower case, underscores and brackets () are removed and the 10299x66 data frame containing features with 10299x1 data frames containing activity labels and subject IDs are merged into clean_data.txt, a 10299x68 data frame such that the first column contains subject IDs, the second column activity names, and the last 66 columns are measurements. 
+
+5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+
+The scripts creates a independent tidy data set with the average of each measurement for each activity and each subject. The result is saved as data_averages.txt of dimensions 180x68. There are 66 attributes in the columns plus one column (first) containing the subject IDs and one more (second) containing the acvtivity IDs. There are 30 subjects and 6 activities, thus 180 rows in this data set with averages.
